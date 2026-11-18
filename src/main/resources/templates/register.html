@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Create account')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="narrow">
+  <h1>Create account</h1>
+  <form th:action="@{/register}" th:object="${form}" method="post" class="stack">
+    <label>Username
+      <input type="text" th:field="*{username}" autocomplete="username" required>
+      <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error</span>
+    </label>
+    <label>Password
+      <input type="password" th:field="*{password}" autocomplete="new-password" required>
+      <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</span>
+    </label>
+    <button type="submit">Create account</button>
+  </form>
+  <p>Already registered? <a th:href="@{/login}">Log in</a></p>
+</main>
+</body>
+</html>

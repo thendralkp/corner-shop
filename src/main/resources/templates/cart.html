@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Your cart')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main>
+  <h1>Your cart</h1>
+
+  <div class="empty" th:if="${items.isEmpty()}">
+    <p>Your cart is empty.</p>
+    <a th:href="@{/}">Browse products</a>
+  </div>
+
+  <div class="cart-wrap" th:unless="${items.isEmpty()}">
+    <table class="cart">
+      <thead>
+        <tr><th>Item</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${items}">
+          <td th:text="${item.product.name}">Item</td>
+          <td th:text="'₹' + ${#numbers.formatDecimal(item.product.price, 1, 'COMMA', 0, 'POINT')}">₹0</td>
+          <td>
+            <form class="inline" th:action="@{/cart/update/{id}(id=${item.id})}" method="post">
+              <input type="number" name="quantity" min="0" max="20" th:value="${item.quantity}" aria-label="Quantity">
+              <button type="submit" class="secondary">Update</button>
+            </form>
+          </td>
+          <td th:text="'₹' + ${#numbers.formatDecimal(item.lineTotal, 1, 'COMMA', 0, 'POINT')}">₹0</td>
+          <td>
+            <form th:action="@{/cart/remove/{id}(id=${item.id})}" method="post">
+              <button type="submit" class="link">Remove</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total</td>
+          <td colspan="2" th:text="'₹' + ${#numbers.formatDecimal(total, 1, 'COMMA', 0, 'POINT')}">₹0</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</main>
+</body>
+</html>

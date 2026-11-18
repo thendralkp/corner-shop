@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${title} + ' - Corner Shop'">Corner Shop</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:fragment="nav" class="topbar">
+  <a class="brand" th:href="@{/}">Corner Shop</a>
+  <nav>
+    <th:block th:if="${username != null}">
+      <a th:href="@{/cart}">Cart (<span th:text="${cartCount}">0</span>)</a>
+      <span class="who" th:text="${username}">user</span>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit" class="link">Log out</button>
+      </form>
+    </th:block>
+    <th:block th:unless="${username != null}">
+      <a th:href="@{/login}">Log in</a>
+      <a th:href="@{/register}">Register</a>
+    </th:block>
+  </nav>
+</header>
+</body>
+</html>
