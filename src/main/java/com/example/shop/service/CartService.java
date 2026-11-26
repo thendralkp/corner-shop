@@ -52,7 +52,7 @@ public class CartService {
                             .orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));
                     return new CartItem(user, product, 0);
                 });
-        item.setQuantity(Math.min(item.getQuantity() + 2, MAX_QUANTITY));
+        item.setQuantity(Math.min(item.getQuantity() + 1, MAX_QUANTITY));
         cartItems.save(item);
     }
 
